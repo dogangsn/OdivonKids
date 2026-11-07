@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthStore } from '../core/auth/auth-store';
 import { I18nStore, SupportedLang } from '../core/i18n/i18n';
+import { VersionStore } from '../core/version/version-store';
 import { PRODUCT_NAVIGATION } from '../domain/domain-navigation';
 import { PRODUCT } from '../domain/product-manifest';
 
@@ -85,6 +86,9 @@ import { PRODUCT } from '../domain/product-manifest';
           <button type="button" class="odv-btn-ghost w-full justify-start" (click)="logout()">
             <span class="material-symbols-rounded">logout</span>Güvenli çıkış
           </button>
+          <p class="mt-2 text-center text-[11px] text-slate-400" [title]="version.current.builtAt">
+            {{ version.label }}
+          </p>
         </div>
       </aside>
       <div class="lg:ms-72">
@@ -140,6 +144,7 @@ import { PRODUCT } from '../domain/product-manifest';
 export class AppShell {
   readonly product = PRODUCT;
   readonly auth = inject(AuthStore);
+  readonly version = inject(VersionStore);
   readonly i18n = inject(I18nStore);
   readonly mobileOpen = signal(false);
   readonly dark = signal(localStorage.getItem('odivon:theme') === 'dark');

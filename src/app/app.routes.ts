@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/auth/auth.guard';
-import { PRODUCT_NAVIGATION } from './domain/domain-navigation';
+import { AREAS } from './domain/domain-navigation';
 
 export const routes: Routes = [
   {
@@ -20,27 +20,34 @@ export const routes: Routes = [
     children: [
       {
         path: 'overview',
+        title: 'Genel Bakış · OdivonKids',
         loadComponent: () =>
-          import('./features/workspace/workspace-page').then((m) => m.WorkspacePage),
-        data: { view: 'overview' },
+          import('./features/overview/overview-page').then((m) => m.OverviewPage),
       },
-      ...PRODUCT_NAVIGATION.map((item) => ({
-        path: item.path,
+      {
+        path: 'products',
+        title: 'Ürün Kataloğu · OdivonKids',
         loadComponent: () =>
-          import('./features/workspace/workspace-page').then((m) => m.WorkspacePage),
-        data: { view: 'domain', section: item.key },
+          import('./features/products/products-page').then((m) => m.ProductsPage),
+      },
+      ...AREAS.map((area) => ({
+        path: area.path,
+        title: `${area.label} · OdivonKids`,
+        loadComponent: () =>
+          import('./features/compliance/compliance-page').then((m) => m.CompliancePage),
+        data: { section: area.key },
       })),
       {
         path: 'activity',
+        title: 'Aktiviteler · OdivonKids',
         loadComponent: () =>
-          import('./features/workspace/workspace-page').then((m) => m.WorkspacePage),
-        data: { view: 'activity' },
+          import('./features/activity/activity-page').then((m) => m.ActivityPage),
       },
       {
         path: 'settings',
+        title: 'Ayarlar · OdivonKids',
         loadComponent: () =>
-          import('./features/workspace/workspace-page').then((m) => m.WorkspacePage),
-        data: { view: 'settings' },
+          import('./features/settings/settings-page').then((m) => m.SettingsPage),
       },
       { path: '', pathMatch: 'full', redirectTo: 'overview' },
     ],

@@ -1,6 +1,6 @@
 # OdivonKids
 
-Odivon'un F‑Gas uyumluluk ve saha operasyonu ürünüdür. Angular 22, Signals, Tailwind CSS 4 ve Odivon UI Design System ile geliştirilir.
+Odivon'un çocuk ürünleri güvenliği ve uyumluluk ürünüdür: her ürünün yaş sınıfı, test raporu, uyarı ve parti kanıtlarını tek yerde toplayıp pazara hazır olup olmadığını gösterir. Angular 22, Signals, Tailwind CSS 4 ve Odivon UI Design System ile geliştirilir.
 
 ## Yerel geliştirme
 

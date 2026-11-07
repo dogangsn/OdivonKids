@@ -7,12 +7,16 @@
 }
 
 :root.dark { color-scheme: dark; }
-* { box-sizing: border-box; }
-html, body { min-height: 100%; margin: 0; }
+/* Taban kuralları katman içinde: katmansız yazılırsa Tailwind yardımcı sınıflarını ezer
+   (ör. butonlarda text-xs / font-bold / border çalışmıyordu). */
+@layer base {
+  * { box-sizing: border-box; }
+  html, body { min-height: 100%; margin: 0; }
+  button, input, select, textarea { font: inherit; }
+  button { cursor: pointer; border: 0; }
+}
 body { background: radial-gradient(circle at 82% -10%, rgb(124 58 237 / .09), transparent 28rem), #f8fafc; color: #0f172a; }
 .dark body { background: radial-gradient(circle at 82% -10%, rgb(124 58 237 / .16), transparent 30rem), #0b1120; color: #f8fafc; }
-button, input, select { font: inherit; }
-button { cursor: pointer; border: 0; }
 .material-symbols-rounded { font-size: 20px; line-height: 1; }
 .custom-scroll { scrollbar-width: thin; scrollbar-color: #94a3b8 transparent; }
 .rtl .directional-icon { transform: scaleX(-1); }
@@ -21,3 +25,16 @@ button { cursor: pointer; border: 0; }
 .odv-swal-confirm { border-radius: .75rem !important; background: #6d28d9 !important; }
 .odv-swal-danger { border-radius: .75rem !important; background: #dc2626 !important; }
 .odv-swal-cancel { border-radius: .75rem !important; background: #e2e8f0 !important; color: #334155 !important; }
+
+/* Kenar çubuğu: mobilde kayar, masaüstünde sabit; RTL'de ters yönden açılır. */
+.odv-sidebar-closed { transform: translateX(-100%); }
+.rtl .odv-sidebar-closed { transform: translateX(100%); }
+@media (min-width: 64rem) { .odv-sidebar, .rtl .odv-sidebar { transform: none; } }
+
+/* Aktif menü öğesi */
+.odv-nav-active { background: #f5f3ff; color: #4c1d95 !important; }
+.odv-nav-active::before {
+  content: ""; position: absolute; inset-block: .55rem; inset-inline-start: -.25rem;
+  width: 4px; border-radius: 999px; background: linear-gradient(#6366f1, #7c3aed);
+}
+.dark .odv-nav-active { background: rgb(124 58 237 / .14); color: #ddd6fe !important; }

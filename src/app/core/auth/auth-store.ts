@@ -1,4 +1,5 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
+import { clearCookies } from '../version/session-reset';
 import { FirebaseIdentity } from './firebase-identity';
 
 export interface AppSession {
@@ -36,6 +37,10 @@ export class AuthStore {
   logout(): void {
     void this.identity.logout();
     localStorage.removeItem(this.storageKey);
+    try {
+      sessionStorage.clear();
+    } catch {}
+    clearCookies();
     this.session.set(null);
   }
   private persist(session: AppSession): void {

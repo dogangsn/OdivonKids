@@ -3,6 +3,7 @@ import { email, FormField, form, minLength, required, submit } from '@angular/fo
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthStore } from '../../core/auth/auth-store';
 import { TranslatePipe } from '../../core/i18n/i18n';
+import { VersionStore } from '../../core/version/version-store';
 import { PRODUCT } from '../../domain/product-manifest';
 
 @Component({
@@ -77,6 +78,15 @@ import { PRODUCT } from '../../domain/product-manifest';
               }}
             </p>
           </div>
+          @if (version.justUpdated(); as updatedTo) {
+            <div
+              class="mb-4 flex items-start gap-2 rounded-2xl border border-violet-200 bg-violet-50 p-3 text-sm text-violet-800 dark:border-violet-500/30 dark:bg-violet-500/10 dark:text-violet-200"
+              role="status"
+            >
+              <span class="material-symbols-rounded" aria-hidden="true">system_update</span>
+              <span>Uygulama v{{ updatedTo }} sürümüne güncellendi. Lütfen tekrar giriş yapın.</span>
+            </div>
+          }
           <form class="space-y-4" (submit)="onSubmit($event)">
             @if (isRegister) {
               <label class="block"
@@ -165,6 +175,7 @@ import { PRODUCT } from '../../domain/product-manifest';
           <p class="mt-8 text-center text-[11px] leading-5 text-slate-400">
             Devam ederek kullanım koşullarını ve gizlilik bildirimini kabul etmiş olursunuz.
           </p>
+          <p class="mt-2 text-center text-[11px] text-slate-400">{{ version.label }}</p>
         </div>
       </section>
     </main>
@@ -172,6 +183,7 @@ import { PRODUCT } from '../../domain/product-manifest';
 })
 export class AuthPage {
   readonly product = PRODUCT;
+  readonly version = inject(VersionStore);
   readonly isRegister = inject(ActivatedRoute).snapshot.data['mode'] === 'register';
   readonly showPassword = signal(false);
   readonly busy = signal(false);

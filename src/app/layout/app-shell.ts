@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthStore } from '../core/auth/auth-store';
 import { I18nStore, SupportedLang } from '../core/i18n/i18n';
+import { ThemeStore } from '../core/theme/theme-store';
 import { VersionStore } from '../core/version/version-store';
 import { PRODUCT_NAVIGATION } from '../domain/domain-navigation';
 import { PRODUCT } from '../domain/product-manifest';
@@ -147,7 +148,8 @@ export class AppShell {
   readonly version = inject(VersionStore);
   readonly i18n = inject(I18nStore);
   readonly mobileOpen = signal(false);
-  readonly dark = signal(localStorage.getItem('odivon:theme') === 'dark');
+  private readonly theme = inject(ThemeStore);
+  readonly dark = this.theme.dark;
   readonly menu = [
     { path: '/overview', icon: 'dashboard', label: 'Genel Bakış' },
     ...PRODUCT_NAVIGATION.map((item) => ({
@@ -160,16 +162,13 @@ export class AppShell {
   ];
   private readonly router = inject(Router);
   constructor() {
-    document.documentElement.classList.toggle('dark', this.dark());
     this.i18n.setLanguage(this.i18n.currentLang());
   }
   setLanguage(value: string): void {
     this.i18n.setLanguage(value as SupportedLang);
   }
   toggleTheme(): void {
-    this.dark.update((v) => !v);
-    document.documentElement.classList.toggle('dark', this.dark());
-    localStorage.setItem('odivon:theme', this.dark() ? 'dark' : 'light');
+    this.theme.toggle();
   }
   logout(): void {
     this.auth.logout();

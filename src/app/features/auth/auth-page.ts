@@ -35,15 +35,6 @@ import { ProductPreview } from '../marketing/product-preview';
             <odv-brand-mark tone="light" />
           </a>
           <div class="flex items-center gap-1">
-            <a
-              routerLink="/"
-              class="hidden items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold text-indigo-100/80 hover:bg-white/10 hover:text-white sm:inline-flex"
-              ><span
-                class="material-symbols-rounded directional-icon !text-[18px]"
-                aria-hidden="true"
-                >arrow_back</span
-              >Ana sayfa</a
-            >
             <button
               type="button"
               class="grid size-10 place-items-center rounded-xl text-indigo-100 hover:bg-white/10"
